@@ -1,0 +1,27 @@
+<!-- src/app/favorites/favorites.component.html -->
+<div class="container">
+    <!-- Navigation Menu -->
+    <nav class="navbar">
+      <a class="navbar-brand" href="#">Actors Explorer</a>
+      <div class="nav-links">
+        <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active-link">Home</a>
+        <a class="nav-link active" [routerLink]="['/favorites']" routerLinkActive="active-link">Favorites</a>
+      </div>
+    </nav>
+  
+    <!-- Content for displaying favorites -->
+    <h2>Favorite Actors</h2>
+    <div class="actors-grid" *ngIf="favoriteActors.length > 0; else noFavorites">
+      <div *ngFor="let actor of favoriteActors" class="actor-card">
+        <img [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="{{ actor.name }}">
+        <div class="actor-info">
+          <h5>{{ actor.name }}</h5>
+          <button (click)="removeFavorite(actor)" class="btn-remove">Remove Favorite</button>
+          <a [routerLink]="['/actor', actor.id]" class="btn-view">View Movies</a>
+        </div>
+      </div>
+    </div>
+    <ng-template #noFavorites>
+      <p>No favorite actors added yet.</p>
+    </ng-template>
+  </div>

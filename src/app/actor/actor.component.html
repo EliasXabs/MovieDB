@@ -1,0 +1,35 @@
+<!-- src/app/actor/actor.component.html -->
+<div class="container">
+  <div *ngIf="loading" class="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div class="movies-grid" *ngIf="movies.length > 0">
+      <div *ngFor="let movie of paginatedMovies" class="movie-card">
+          <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="{{ movie.title }}">
+          <div class="movie-info">
+              <h5>{{ movie.title }}</h5>
+              <p>{{ movie.overview }}</p>
+              <p><small class="text-muted">Released: {{ movie.release_date | date }}</small></p>
+              <p><small class="text-muted">Rating: {{ movie.popularity | number:'1.0-0' }} / 10</small></p>
+          </div>
+      </div>
+  </div>
+  <!-- Pagination Controls -->
+<nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+          &laquo; Previous
+        </button>
+      </li>
+      <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="currentPage === (i + 1)">
+        <button class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button class="page-link" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+          Next &raquo;
+        </button>
+      </li>
+    </ul>
+  </nav>
+  
+</div>

@@ -1,0 +1,37 @@
+<!-- src/app/home/home.component.html -->
+<div class="container">
+  <!-- Navigation Menu -->
+  <nav class="navbar">
+    <a class="navbar-brand" href="#" (click)="loadPopularActors()">Actors Explorer</a>
+    <div class="nav-links">
+      <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active-link">Home</a>
+      <a class="nav-link" [routerLink]="['/favorites']" routerLinkActive="active-link">Favorites</a>
+    </div>
+  </nav>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="query" placeholder="Search actors...">
+    <button (click)="onSearch()">Search</button>
+  </div>
+
+  <!-- Loading and Error Messages -->
+  <div *ngIf="loading" class="loading">Loading...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <!-- Actors Display -->
+  <div class="actors-grid" *ngIf="actors.length > 0">
+    <div *ngFor="let actor of actors" class="actor-card">
+      <img [src]="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="{{ actor.name }}">
+      <div class="actor-info">
+        <h5>{{ actor.name }}</h5>
+        <p>Known for:</p>
+        <ul>
+          <li *ngFor="let movie of actor.known_for">{{ movie.title }}</li>
+        </ul>
+        <button (click)="toggleFavorite(actor)" [ngClass]="{'favorite': isFavorite(actor)}" class="btn-view">Favorite</button>
+        <a [routerLink]="['/actor', actor.id]" class="btn-view">View Movies</a>
+      </div>
+    </div>
+  </div>
+</div>
